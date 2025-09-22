@@ -1,0 +1,20 @@
+public class DSA {
+	public static Integer lengthOfLongestSubstringAscii(String s) {
+        if (s == null) return 0;
+
+        // 128 covers standard ASCII.  Fill with -1 for "not seen"
+        List<Integer> last = new List<Integer>();
+        for (Integer i = 0; i < 128; i++) last.add(-1);
+
+        Integer left = 0, maxLen = 0;
+        for (Integer right = 0; right < s.length(); right++) {
+            Integer code = s.charAt(right);       // returns integer code point
+            if (last[code] >= left) {
+                left = last[code] + 1;
+            }
+            last[code] = right;
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+        return maxLen;
+	}
+}
