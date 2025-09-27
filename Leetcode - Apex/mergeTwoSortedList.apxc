@@ -1,0 +1,45 @@
+public class DSA {
+	public class ListNode {
+        public Integer val;
+        public ListNode next;
+
+        public ListNode(Integer v) {
+            val = v;
+            next = null;
+        }
+    }
+
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        // Dummy head simplifies handling of the first node
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                tail.next = l1;
+                l1 = l1.next;
+            } else {
+                tail.next = l2;
+                l2 = l2.next;
+            }
+            tail = tail.next;
+        }
+
+        // Append the remaining nodes (only one list is non-null)
+        tail.next = (l1 != null) ? l1 : l2;
+        return dummy.next;
+    }
+
+    public static ListNode mergeTwoListsRecursive(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+
+        if (l1.val <= l2.val) {
+            l1.next = mergeTwoListsRecursive(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoListsRecursive(l1, l2.next);
+            return l2;
+        }
+    }
+}
